@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tournament Winner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #f0f0f0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+.background-animal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.15;
+    overflow: hidden;
+}
+
+.background-animal img {
+    position: absolute;
+    width: 300px;
+    height: auto;
+    bottom: 15%;
+    right: 5%;
+    animation: floatAnimal 8s ease-in-out infinite;
+}
+
+@keyframes floatAnimal {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-60px) rotate(5deg);
+    }
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .background-animal img {
+        width: 200px;
+        right: 2%;
+        bottom: 25%;
+    }
+}
+        .hero {
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            opacity: 0;
+            transform: translateY(-20px);
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+
+        .trophy-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .trophy {
+            width: 100%;
+            position: absolute;
+            bottom: -100%;
+            left: 0;
+            filter: drop-shadow(0 0 10px gold);
+        }
+
+        .gallery {
+            padding: 50px 20px;
+        }
+
+        .gallery-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .photo-item {
+            background: #2a2a4a;
+            border-radius: 10px;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0.8);
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .photo-item img {
+            width: 100%;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .graffiti {
+            position: absolute;
+            background-size: cover;
+            opacity: 0;
+            z-index: 5;
+        }
+
+        @media (min-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+
+            .trophy-container {
+                width: 300px;
+                height: 400px;
+            }
+
+            .gallery-title {
+                font-size: 2.5rem;
+            }
+        }
+        // Trophy rising animation
+timeline.to('.trophy', {
+    y: '-100%',
+    duration: 2,
+    ease: 'elastic.out(1, 0.3)'
+});
+
+// Move the trophy container up after the trophy rises
+timeline.to('.trophy-container', {
+    y: '-30px',
+    duration: 1.2,
+    ease: 'power2.out'
+}, "-=0.7");
+
+// Text fade in
+timeline.to('h1', {
+    opacity: 1,
+    y: 0,
+    duration: 1.5,
+    ease: 'power2.out'
+}, "-=1");
+
+    </style>
+</head>
+<body>
+<div class="background-animal">
+    <img src="./trophy.png" alt="trophy">
+</div>
+<section class="hero">
+    <div class="container">
+        <h1>To the best player of the tournament</h1>
+        <div class="trophy-container">
+            <!-- Updated trophy image URL -->
+            <img src="./heart.png" alt="Trophy" class="trophy">
+        </div>
+    </div>
+</section>
+
+<section class="gallery">
+    <h2 class="gallery-title">All the best 💖</h2>
+    <div class="photo-grid">
+        <div class="photo-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Google_Images_2015_logo.svg/800px-Google_Images_2015_logo.svg.png" alt="Tournament Photo">
+        </div>
+    </div>
+</section>
+
+<!-- Animation libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Register ScrollTrigger with GSAP
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animation sequence
+        const timeline = gsap.timeline();
+
+        // Trophy rising animation
+        timeline.to('.trophy', {
+            y: '-100%',
+            duration: 2,
+            ease: 'elastic.out(1, 0.3)'
+        });
+
+        // Text fade in
+        timeline.to('h1', {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            ease: 'power2.out'
+        }, "-=1");
+
+        // Function for confetti/sprinkles
+        function launchConfetti() {
+            const colors = ['#FFD700', '#FFC0CB', '#87CEFA', '#7FFF00', '#FF69B4'];
+
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: colors,
+                startVelocity: 30,
+                gravity: 0.5,
+                ticks: 200
+            });
+        }
+
+        // Initial confetti
+        setTimeout(launchConfetti, 1500);
+
+        // Continuous confetti every 2 seconds for the first 10 seconds
+        let confettiInterval = setInterval(function() {
+            confetti({
+                particleCount: 30,
+                angle: Math.random() * 360,
+                spread: 50,
+                origin: {
+                    x: Math.random(),
+                    y: Math.random() - 0.2
+                },
+                startVelocity: 20,
+                gravity: 0.8,
+                ticks: 100
+            });
+        }, 2000);
+
+        // Stop continuous confetti after 10 seconds
+        setTimeout(() => clearInterval(confettiInterval), 10000);
+
+        // Graffiti effect for photos
+        function createGraffitiElements() {
+            const graffitiColors = ['#FF5733', '#33FF57', '#3357FF', '#F3FF33', '#FF33F3'];
+
+            document.querySelectorAll('.photo-item').forEach((item) => {
+                // Create paint splatter elements
+                for (let i = 0; i < 3; i++) {
+                    const graffiti = document.createElement('div');
+                    graffiti.classList.add('graffiti');
+                    const size = Math.random() * 80 + 40;
+                    graffiti.style.width = `${size}px`;
+                    graffiti.style.height = `${size}px`;
+                    graffiti.style.top = `${Math.random() * 100}%`;
+                    graffiti.style.left = `${Math.random() * 100}%`;
+                    graffiti.style.background = graffitiColors[Math.floor(Math.random() * graffitiColors.length)];
+                    graffiti.style.borderRadius = '50%';
+                    graffiti.style.filter = 'blur(5px)';
+                    item.appendChild(graffiti);
+                }
+            });
+        }
+
+        createGraffitiElements();
+
+        // Animate photos on scroll
+        gsap.utils.toArray('.photo-item').forEach((item, i) => {
+            gsap.set(item, { opacity: 0, scale: 0.8 });
+
+            gsap.to(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top bottom-=100",
+                    toggleActions: "play none none none"
+                },
+                opacity: 1,
+                scale: 1,
+                duration: 1,
+                ease: "back.out(1.7)",
+                delay: i * 0.1,
+                onStart: function() {
+                    // Animate graffiti elements
+                    gsap.to(item.querySelectorAll('.graffiti'), {
+                        opacity: 0.7,
+                        duration: 0.5,
+                        stagger: 0.1,
+                        ease: "power1.out"
+                    });
+
+                    // Throw confetti for each photo
+                    confetti({
+                        particleCount: 20,
+                        spread: 50,
+                        origin: {
+                            x: (item.getBoundingClientRect().left + item.offsetWidth/2) / window.innerWidth,
+                            y: item.getBoundingClientRect().top / window.innerHeight
+                        },
+                        startVelocity: 20
+                    });
+                }
+            });
+        });
+    });
+</script>
+</body>
+
+</html>
